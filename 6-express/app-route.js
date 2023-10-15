@@ -1,40 +1,12 @@
 import express from 'express';
+import postRouter from './router/post.js';
+import userRouter from './router/user.js';
 
 const app = express();
 
 app.use(express.json());
 
-// HTTP Method가 반복되는 느낌을 줄이기 위해 app.route()를 사용할 수 있다.
-app.route('/posts')
-    .get((req, res, next) => {
-        res.status(201).send('GET: /posts');
-    }).post((req, res) => {
-        res.status(201).send('POST: /posts');
-    }
-);
-
-app.route('/posts/:id')
-    .get((req, res, next) => {
-        res.status(201).send('GET: /posts');
-    }).post((req, res) => {
-        res.status(201).send('POST: /posts');
-    }
-);
-
-// app.get('/posts', (req, res) => {
-//     res.status(201).send('GET: /posts');
-// });
-
-// app.post('/posts', (req, res) => {
-//     res.status(201).send('POST: /posts');
-// });
-
-// app.put('/posts/:id', (req, res) => {
-//     res.status(201).send('PUT: /posts/:id');
-// });
-
-// app.delete('/posts/:id', (req, res) => {
-//     res.status(201).send('DELETE: /posts/:id');
-// });
+app.use('/posts', postRouter); // 제일 상위에 있는 root를 설정한 다음에 router를 연결하면 /posts로 들어오는 요청은 postRouter로 처리하겠다.
+app.use('/users', userRouter); // /users로 들어오는 요청은 userRouter로 처리하겠다.
 
 app.listen(8080);
